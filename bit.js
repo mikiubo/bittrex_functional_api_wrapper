@@ -48,7 +48,6 @@ const bittrex_apisign = _.curry( function( key, val ){
 });
 
 const my_bittrex_apisign = bittrex_apisign( options.apisecret );
-//console.log('73c19ad90eacfe6d5d99db91b3f61b6c95210761b361eb6fb98eb7a4497d21d7bf6cd113cfebefaebc182a5864e5a2b3d96447d952cb05160cfac44fadec3985=?'+my_bittrex_apisign('ciao'));
 
 const url_public_options = function(url){
   return {
