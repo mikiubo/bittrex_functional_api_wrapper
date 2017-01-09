@@ -1,5 +1,6 @@
 const _ = require("ramda");
-const l = require("./util_lib.js");
+var Task = require('./data.task.umd.js');
+var https = require('https');
 const hmac_sha512 = require('./hmac-sha512.js');
 
 const options = {
@@ -67,7 +68,25 @@ const url_private_options = function(url){
 };
 
 
-const https_task = l.https_req_task;
+const https_task = function(https_options){
+  return new Task(  function(reject, resolve) {
+
+  var data = "";
+  var req = https.request(https_options, (res) => {
+      res.on('data', (d) => {
+      data+=d;
+    });
+    res.on('end',()=>{ 
+      resolve(data)});
+  });
+
+  req.on('error', (e) => {
+    reject(e);
+  });
+  req.end();
+
+  });
+};
 
 const public_get_task = _.curry(_.compose( _.map(JSON.parse), https_task, url_public_options, public_bittrex_url));
 
